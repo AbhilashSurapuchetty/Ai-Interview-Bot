@@ -1,0 +1,184 @@
+/* style.css — AI Interview ChatBot */
+
+/* ===== Global ===== */
+body {
+  font-family: "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  background: #f8f9fb;
+  color: #222;
+  line-height: 1.6;
+}
+
+header {
+  background: #1e88e5;
+  color: #fff;
+  padding: 16px;
+  font-size: 1.4rem;
+  font-weight: 600;
+  text-align: center;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.08);
+}
+
+.container {
+  max-width: 720px;
+  margin: 32px auto;
+  background: #fff;
+  padding: 24px;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+/* ===== Headings & Text ===== */
+h2, h3, h4 {
+  font-weight: 600;
+  margin-top: 0;
+}
+
+p {
+  margin: 0.5em 0;
+}
+
+.muted {
+  color: #777;
+}
+
+/* ===== Forms ===== */
+form label {
+  display: block;
+  font-weight: 500;
+  margin-top: 12px;
+  margin-bottom: 4px;
+}
+
+form input[type="text"],
+form input[type="email"],
+form input[type="password"],
+form input[type="number"],
+form textarea,
+form select {
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+  transition: border-color 0.2s;
+}
+
+form input:focus,
+form textarea:focus,
+form select:focus {
+  outline: none;
+  border-color: #1e88e5;
+}
+
+/* ===== Buttons ===== */
+button, .btn {
+  display: inline-block;
+  padding: 10px 18px;
+  border: none;
+  border-radius: 6px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.2s, opacity 0.2s;
+  text-decoration: none;
+}
+
+.btn-primary, button {
+  background: #1e88e5;
+  color: #fff;
+}
+
+.btn-secondary {
+  background: #e0e0e0;
+  color: #333;
+}
+
+.btn-danger {
+  background: #e53935;
+  color: #fff;
+}
+
+button:hover,
+.btn:hover {
+  opacity: 0.9;
+}
+
+.btn-disabled {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+/* ===== Flash Messages ===== */
+.flash-success {
+  color: green;
+  text-align: center;
+  margin: 10px 0;
+}
+
+.flash-error {
+  color: red;
+  text-align: center;
+  margin: 10px 0;
+}
+
+/* ===== Cards & Grid ===== */
+.grid {
+  display: grid;
+  gap: 16px;
+}
+
+.card {
+  border: 1px solid #eee;
+  border-radius: 12px;
+  padding: 16px;
+  background: #fff;
+}
+
+.skill {
+  display: flex;
+  justify-content: space-between;
+  padding: 6px 0;
+  border-bottom: 1px dashed #eee;
+}
+
+/* ===== Video & Pills ===== */
+video {
+  width: 100%;
+  border-radius: 8px;
+}
+
+.pill {
+  display: inline-block;
+  font-size: 12px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: #eee;
+  margin-left: 8px;
+}
+
+/* ===== Status & Transcript ===== */
+.status {
+  margin-top: 8px;
+  font-size: 14px;
+}
+
+.transcript {
+  width: 100%;
+  min-height: 90px;
+  margin-top: 10px;
+  border-radius: 6px;
+  padding: 8px;
+  border: 1px solid #ccc;
+}
+
+.hidden {
+  display: none;
+}
+
+.success {
+  color: #2e7d32;
+}
+
+.warn {
+  color: #d32f2f;
+}

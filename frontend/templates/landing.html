@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>AI Interview ChatBot</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <header>AI Interview ChatBot</header>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        {% for category, message in messages %}
+          <div style="color: {{ 'red' if category == 'error' else 'green' }}; text-align:center; margin:10px 0;">
+            {{ message }}
+          </div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+
+
+    <div class="container" style="text-align:center;">
+        <h2>Welcome to AI-Powered Interview Assistant</h2>
+        <p>Book a demo to experience automated first-round interviews.</p>
+        <a href="{{ url_for('auth.login') }}"><button>Book a Demo</button></a>
+    </div>
+</body>
+</html>

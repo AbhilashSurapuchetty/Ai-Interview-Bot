@@ -1,0 +1,7 @@
+[
+    {
+        "name": "Maya",
+        "email": "maya1@gmail.com",
+        "password": "scrypt:32768:8:1$pJ48mPygL8AuG4Da$f37d7db12a8a1a9834341ff97b2fd3264d0c0cb455457b058d7cdd7fc67c24d357832f70e82794957ee41d64fa0f958f7b03d2e4e8430ae9eaa842ed93e66379"
+    }
+]

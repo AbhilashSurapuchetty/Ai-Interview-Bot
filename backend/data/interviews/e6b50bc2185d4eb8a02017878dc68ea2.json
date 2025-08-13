@@ -1,0 +1,14 @@
+{
+  "id": "e6b50bc2185d4eb8a02017878dc68ea2",
+  "created_at": "2025-08-13T13:46:59.496887Z",
+  "candidate": "Maya",
+  "role": "Data Scientist ",
+  "difficulty": "Easy",
+  "num_questions": 2,
+  "intro": "Here goes your questions, Maya, asked with Easy difficulty for the Data Scientist  role (2 questions).",
+  "questions": [
+    "1.  Describe a time you had to explain complex data findings to a non-technical audience. What techniques did you use to ensure they understood the key takeaways?",
+    "2.  This job requires collaborating with engineers and product designers.  Give me an example of a time you successfully collaborated with a team whose skillset was significantly different from your own to achieve a shared objective."
+  ],
+  "answers": []
+}

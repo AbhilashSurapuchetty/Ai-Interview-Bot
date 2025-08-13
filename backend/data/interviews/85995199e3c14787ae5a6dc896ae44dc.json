@@ -1,0 +1,55 @@
+{
+  "id": "85995199e3c14787ae5a6dc896ae44dc",
+  "created_at": "2025-08-13T13:18:50.949144Z",
+  "candidate": "Maya",
+  "role": "Data Scientist ",
+  "difficulty": "Easy",
+  "num_questions": 6,
+  "intro": "Here goes your questions, Maya, asked with Easy difficulty for the Data Scientist  role (6 questions).",
+  "questions": [
+    "1.  Describe your experience with data mining techniques and how you've applied them to solve real-world problems.  Provide a specific example.",
+    "2.  Explain your understanding of different statistical analysis methods and when you would choose one over another.",
+    "3.  Walk me through your process for cleaning and validating a large, messy dataset. What are some common challenges you encounter?",
+    "4.  You're presented with a dataset showing a decline in sales.  Outline your approach to investigating the cause of this decline.",
+    "5.  How would you communicate complex data findings to a non-technical audience, such as a senior executive team?",
+    "6.  Describe your experience collaborating with software developers or engineers to implement analytical models into production.  What were some of the challenges or successes you encountered?"
+  ],
+  "answers": [
+    {
+      "index": 0,
+      "question": "Describe your experience with data mining techniques and how you've applied them to solve real-world problems.  Provide a specific example.",
+      "transcript": "I have experience with data mining techniques of classification clustering and association for example in my retail genius project I use historical says data extract purse is in patterns and forecast product demand by applying feature engineering and regression modelling I identified seasonal Grand and optimize it stock levels which improve prediction accuracy supported better inventory discussion",
+      "video_url": "/static/uploads/7007a6c45e7d434ebef84bf969384825.webm"
+    },
+    {
+      "index": 1,
+      "question": "Explain your understanding of different statistical analysis methods and when you would choose one over another.",
+      "transcript": "variance to understand basic trend inference and Statistics like hypothesis testing confidence intervals and regression to draw conclusion submit a corporation from a sample to modelling regression of classification for forecasting outcome and explorer correlation anova test identify relationship",
+      "video_url": "/static/uploads/34b3c4e07dbf4599951503340f0236d3.webm"
+    },
+    {
+      "index": 2,
+      "question": "Walk me through your process for cleaning and validating a large, messy dataset. What are some common challenges you encounter?",
+      "transcript": "I start the assistant data qualities such as missing while is duplicates outless and then standard is formats handle nulls remove inconsistencies and normalise or transform features if needed I valided by checking distribution applying sanitary checks and cross reference with source data common challenges should which are inconsistent formats high missing data ratios mixed data types hidden duplicate and incorrect categorical label",
+      "video_url": "/static/uploads/a5155d7d8bfb41028e6e47d2707cf94b.webm"
+    },
+    {
+      "index": 3,
+      "question": "You're presented with a dataset showing a decline in sales.  Outline your approach to investigating the cause of this decline.",
+      "transcript": "like this maybe come from the decline like check data receive time periods and sources to reload errors segment the data break fails down by product region channel and customer type to see where the Drop is concentrated I didn't say external or internal factor such as market changes competitive price",
+      "video_url": "/static/uploads/90f0497b78694e2a90ad2c3d6dd9a765.webm"
+    },
+    {
+      "index": 4,
+      "question": "How would you communicate complex data findings to a non-technical audience, such as a senior executive team?",
+      "transcript": "I would focus on clarity relevance and story telling start with the headline inside summer is key finding in one clear Jago free sentence use visuals not tables may be like chart straight lines provide context compare against historical performance industrial Benchmarks offer actionable recommendation like end with clear next episode distance can be made immediately stories such that many audience would capture and listen to it",
+      "video_url": "/static/uploads/76e6ff64be634c388e6aecba922e1b13.webm"
+    },
+    {
+      "index": 5,
+      "question": "Describe your experience collaborating with software developers or engineers to implement analytical models into production.  What were some of the challenges or successes you encountered?",
+      "transcript": "so in my previous projects I have work software in a to move machine learning and statistical models from a prototype stays into production ready APS and pipe lens I don't was to Bridge between the kept between the analytical logic and the engineering constant ensuring the model the liver",
+      "video_url": "/static/uploads/55f7e9ed9da844a8840645985326d12e.webm"
+    }
+  ]
+}

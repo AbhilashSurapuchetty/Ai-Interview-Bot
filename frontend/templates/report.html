@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Interview Report</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <style>
+    .grid { display: grid; gap: 16px; }
+    .card { border: 1px solid #ddd; border-radius: 12px; padding: 16px; }
+    .rating { font-weight: bold; }
+    .skill { display: flex; justify-content: space-between; padding: 6px 0; border-bottom: 1px dashed #eee; }
+    .muted { color: #666; }
+    video { width: 100%; max-width: 520px; border-radius: 8px; }
+  </style>
+</head>
+<body>
+<header>Interview Report</header>
+<div class="container grid">
+
+  <div class="card">
+    <h2>{{ name }} – {{ role }} <span class="muted">({{ difficulty }})</span></h2>
+    {% if evaluation %}
+      <p>{{ evaluation.overall_summary }}</p>
+      <p class="rating">Overall Rating: {{ evaluation.overall_rating }}/5</p>
+    {% else %}
+      <p class="muted">AI evaluation not available. Showing raw output below.</p>
+    {% endif %}
+  </div>
+
+  {% if evaluation and evaluation.skills %}
+  <div class="card">
+    <h3>Skill Breakdown</h3>
+    {% for s in evaluation.skills %}
+      <div class="skill">
+        <div>{{ s.name }}</div>
+        <div>{{ s.rating }}/5 – <span class="muted">{{ s.note }}</span></div>
+      </div>
+    {% endfor %}
+  </div>
+  {% endif %}
+
+  <div class="card">
+    <h3>Per-Question Review</h3>
+    {% for a in answers %}
+      <div style="margin-bottom: 20px;">
+        <h4>Q{{ a.index + 1 }}. {{ a.question }}</h4>
+        {% if a.video_url %}
+          <video controls src="{{ a.video_url }}"></video>
+        {% endif %}
+        {% if a.transcript %}
+          <p><strong>Transcript:</strong> {{ a.transcript }}</p>
+        {% endif %}
+
+        {% if evaluation and evaluation.per_question %}
+          {% set pq = (evaluation.per_question | selectattr('index','equalto', a.index) | list) %}
+          {% if pq and pq[0] %}
+            <p><strong>Rating:</strong> {{ pq[0].rating }}/5</p>
+            <p><strong>Strengths:</strong> {{ pq[0].strengths }}</p>
+            <p><strong>Improvements:</strong> {{ pq[0].improvements }}</p>
+          {% endif %}
+        {% endif %}
+      </div>
+      <hr>
+    {% endfor %}
+  </div>
+
+  {% if not evaluation %}
+  <div class="card">
+    <h3>Raw AI Output</h3>
+    <pre>{{ raw_text }}</pre>
+  </div>
+  {% endif %}
+
+  <div>
+    <a class="btn btn-secondary" href="{{ url_for('main.dashboard') }}">Back to Dashboard</a>
+  </div>
+
+</div>
+</body>
+</html>

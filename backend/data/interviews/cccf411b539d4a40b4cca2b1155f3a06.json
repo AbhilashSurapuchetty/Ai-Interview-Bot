@@ -1,0 +1,24 @@
+{
+  "id": "cccf411b539d4a40b4cca2b1155f3a06",
+  "created_at": "2025-08-13T11:21:08.359193Z",
+  "candidate": "Maya",
+  "role": "Backend Intern",
+  "difficulty": "Easy",
+  "num_questions": 5,
+  "intro": "Here goes your questions, Maya, asked with Easy difficulty for the Backend Intern role (5 questions).",
+  "questions": [
+    "1.  Describe your experience with object-oriented programming principles, and provide a specific example of how you've applied them in a past project.",
+    "2.  Explain your understanding of RESTful APIs and how you would approach designing an API endpoint for a specific task, such as retrieving user data from a database.",
+    "3.  Let's say you encounter a bug in a Python FastAPI application.  Walk me through your debugging process, from identifying the problem to implementing a solution.",
+    "4.  This role involves working with databases.  What database systems are you familiar with, and what are some key differences between relational and non-relational databases?",
+    "5.  Describe a time you had to work collaboratively on a software development project. What was your role, and how did you contribute to the team's success?"
+  ],
+  "answers": [
+    {
+      "index": 0,
+      "question": "Describe your experience with object-oriented programming principles, and provide a specific example of how you've applied them in a past project.",
+      "transcript": "so coming to the experience of an object oriented programming perspective I have worked on several projects one of the projects that have work down was agreement where ask to like implement a class based functions for the methods of all the implementation of the code so other language that we use was that was helpful for us because we would like ride functions that are not so",
+      "video_url": "/static/uploads/e426934029ba4ca58a4e325928e94896.webm"
+    }
+  ]
+}

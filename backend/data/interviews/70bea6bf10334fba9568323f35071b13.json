@@ -1,0 +1,22 @@
+{
+  "id": "70bea6bf10334fba9568323f35071b13",
+  "created_at": "2025-08-13T11:23:49.527098Z",
+  "candidate": "Maya",
+  "role": "Assistant Director",
+  "difficulty": "Easy",
+  "num_questions": 10,
+  "intro": "Here goes your questions, Maya, asked with Easy difficulty for the Assistant Director role (10 questions).",
+  "questions": [
+    "1.  Can you describe your experience with film production, even if it's from a non-professional setting?",
+    "2.  What aspects of filmmaking are you most interested in, and why?",
+    "3.  Have you ever worked on a collaborative project, and what was your role?",
+    "4.  How familiar are you with basic camera shots and angles (e.g., wide shot, close-up, over-the-shoulder)?",
+    "5.  Describe a time you had to solve a problem quickly and effectively under pressure.",
+    "6.  How do you stay organized when managing multiple tasks simultaneously?",
+    "7.  What are your strengths and weaknesses as a team player?",
+    "8.  Are you comfortable working long and irregular hours, which are common in film production?",
+    "9.  Why are you interested in the Assistant Director role specifically?",
+    "10. What are your salary expectations for this position?"
+  ],
+  "answers": []
+}

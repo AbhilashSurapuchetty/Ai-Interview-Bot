@@ -1,0 +1,268 @@
+
+
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Interview Setup</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <style>
+    .question-card { border: 1px solid #ddd; padding: 16px; border-radius: 12px; margin-top: 16px; }
+    .controls { margin-top: 12px; display: flex; gap: 10px; flex-wrap: wrap; }
+    video { width: 100%; max-width: 560px; border-radius: 8px; margin-top: 10px; }
+    .pill { display: inline-block; font-size: 12px; padding: 2px 8px; border-radius: 999px; background: #eee; margin-left: 8px; }
+    .status { margin-top: 8px; font-size: 14px; }
+    .transcript { width: 100%; min-height: 90px; margin-top: 10px; }
+    .hidden { display: none; }
+    .success { color: #2e7d32; }
+    .warn { color: #d32f2f; }
+    .btn { padding: 8px 14px; border-radius: 8px; border: none; cursor: pointer; }
+    .btn-primary { background: #1e88e5; color: #fff; }
+    .btn-secondary { background: #eee; }
+    .btn-danger { background: #ef5350; color: #fff; }
+    .btn-disabled { opacity: .5; pointer-events: none; }
+  </style>
+</head>
+<body>
+<header>Interview</header>
+
+<div class="container">
+
+{% if not done %}
+  <h2>Hi {{ name }}, let’s set up your interview</h2>
+  <form method="POST">
+      <label>Job Role:</label>
+      <input type="text" name="role" placeholder="e.g., Data Scientist" required>
+
+      <label>Job Description:</label>
+      <textarea name="description" placeholder="Paste job description here" required></textarea>
+
+      <label>Difficulty:</label>
+      <select name="difficulty" required>
+          <option value="Easy">Easy</option>
+          <option value="Medium">Medium</option>
+          <option value="Hard">Hard</option>
+      </select>
+
+      <label>Number of Questions:</label>
+      <input type="number" name="num_questions" min="1" max="20" required>
+
+      <button type="submit" class="btn btn-primary">Generate Questions</button>
+  </form>
+
+{% else %}
+  <div class="intro"><strong>{{ intro }}</strong></div>
+  <div class="pill">Role: {{ role }}</div>
+  <div class="pill">Difficulty: {{ difficulty }}</div>
+  <div class="pill">Questions: {{ num_questions }}</div>
+
+  <div id="app"
+       data-interview-id="{{ interview_id }}"
+       data-total="{{ num_questions }}"
+       data-name="{{ name }}"></div>
+
+  <div id="questionArea" class="question-card">
+    <div id="qHeader">
+      <h3 id="qTitle">Question</h3>
+      <div id="qIndex" class="pill"></div>
+    </div>
+
+    <p id="qText"></p>
+
+    <video id="preview" class="hidden" controls playsinline></video>
+
+    <div class="controls">
+      <button id="startBtn" class="btn btn-primary">🎥 Start Recording</button>
+      <button id="stopBtn" class="btn btn-danger btn-disabled">⏹ Stop & Preview</button>
+      <button id="saveBtn" class="btn btn-primary btn-disabled">💾 Save Answer</button>
+      <button id="nextBtn" class="btn btn-secondary btn-disabled">➡️ Next Question</button>
+    </div>
+
+    <div class="status" id="recStatus"></div>
+
+    <label style="margin-top:10px;">Transcript (auto-captured; you can edit):</label>
+    <textarea id="transcript" class="transcript" placeholder="Speak clearly; if your browser doesn't support auto-transcription, you can type here."></textarea>
+  </div>
+
+  <div class="controls" style="margin-top: 18px;">
+    <a href="{{ url_for('interview.interview_report') }}" id="reportBtn" class="btn btn-primary btn-disabled">📄 Generate Interview Report</a>
+    <a href="{{ url_for('main.dashboard') }}" class="btn btn-secondary">Back to Dashboard</a>
+  </div>
+
+  <script>
+    // --- Data from server ---
+    const QUESTIONS = {{ questions|tojson }};
+    const appRoot = document.getElementById('app');
+    const INTERVIEW_ID = appRoot.dataset.interviewId;
+    const TOTAL = parseInt(appRoot.dataset.total, 10);
+
+    // --- Elements ---
+    const qTitle = document.getElementById('qTitle');
+    const qIndexPill = document.getElementById('qIndex');
+    const qText = document.getElementById('qText');
+    const preview = document.getElementById('preview');
+    const startBtn = document.getElementById('startBtn');
+    const stopBtn = document.getElementById('stopBtn');
+    const saveBtn = document.getElementById('saveBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    const transcriptEl = document.getElementById('transcript');
+    const recStatus = document.getElementById('recStatus');
+    const reportBtn = document.getElementById('reportBtn');
+
+    // --- Recording state ---
+    let current = 0;
+    let mediaStream = null;
+    let recorder = null;
+    let chunks = [];
+    let lastBlob = null;
+
+    // --- Speech Recognition (browser) ---
+    let recognition = null;
+    let transcriptBuffer = "";
+
+    function supportsSpeech() {
+      return 'webkitSpeechRecognition' in window || 'SpeechRecognition' in window;
+    }
+
+    function startSpeech() {
+      if (!supportsSpeech()) return;
+      const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+      recognition = new SR();
+      recognition.lang = 'en-US';
+      recognition.continuous = true;
+      recognition.interimResults = true;
+      transcriptBuffer = "";
+      recognition.onresult = (e) => {
+        let interim = "";
+        for (let i = e.resultIndex; i < e.results.length; i++) {
+          const res = e.results[i];
+          if (res.isFinal) transcriptBuffer += res[0].transcript + " ";
+          else interim += res[0].transcript;
+        }
+        transcriptEl.value = (transcriptBuffer + interim).trim();
+      };
+      recognition.onerror = () => {};
+      recognition.start();
+    }
+
+    function stopSpeech() {
+      if (recognition) {
+        try { recognition.stop(); } catch (e) {}
+        recognition = null;
+      }
+    }
+
+    function setBtn(el, enabled) {
+      if (enabled) el.classList.remove('btn-disabled'); else el.classList.add('btn-disabled');
+      el.disabled = !enabled;
+    }
+
+    function loadQuestion(i) {
+      const raw = QUESTIONS[i] || "";
+      const cleaned = raw.replace(/^\d+\.\s*/, ''); // drop leading "1. "
+      qTitle.textContent = "Interview Question";
+      qIndexPill.textContent = `#${i+1} of ${TOTAL}`;
+      qText.textContent = cleaned;
+
+      // reset UI
+      preview.classList.add('hidden');
+      preview.src = "";
+      transcriptEl.value = "";
+      lastBlob = null;
+      setBtn(startBtn, true);
+      setBtn(stopBtn, false);
+      setBtn(saveBtn, false);
+      setBtn(nextBtn, false);
+      recStatus.textContent = "";
+    }
+
+    async function startRecording() {
+      try {
+        mediaStream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
+        const mime = MediaRecorder.isTypeSupported('video/webm;codecs=vp9')
+          ? 'video/webm;codecs=vp9'
+          : 'video/webm';
+        recorder = new MediaRecorder(mediaStream, { mimeType: mime });
+        chunks = [];
+        recorder.ondataavailable = e => { if (e.data.size) chunks.push(e.data); };
+        recorder.onstop = () => {
+          lastBlob = new Blob(chunks, { type: 'video/webm' });
+          preview.src = URL.createObjectURL(lastBlob);
+          preview.classList.remove('hidden');
+        };
+        recorder.start();
+        startSpeech();
+        recStatus.textContent = "Recording…";
+        setBtn(startBtn, false);
+        setBtn(stopBtn, true);
+        setBtn(saveBtn, false);
+        setBtn(nextBtn, false);
+      } catch (err) {
+        recStatus.innerHTML = `<span class="warn">Mic/Camera permission denied.</span>`;
+      }
+    }
+
+    function stopRecording() {
+      try { recorder && recorder.stop(); } catch (e) {}
+      mediaStream && mediaStream.getTracks().forEach(t => t.stop());
+      stopSpeech();
+      recStatus.textContent = "Stopped. Preview generated.";
+      setBtn(stopBtn, false);
+      setBtn(saveBtn, true);
+    }
+
+    async function saveAnswer() {
+      if (!lastBlob) {
+        recStatus.innerHTML = `<span class="warn">No recording to save.</span>`;
+        return;
+      }
+      const fd = new FormData();
+      fd.append("interview_id", INTERVIEW_ID);
+      fd.append("q_index", String(current));
+      fd.append("question", qText.textContent);
+      fd.append("transcript", transcriptEl.value || "");
+      fd.append("video", lastBlob, `answer_${current+1}.webm`);
+
+      setBtn(saveBtn, false);
+      recStatus.textContent = "Saving…";
+
+      try {
+        const res = await fetch("{{ url_for('interview.save_answer') }}", { method: "POST", body: fd });
+        const data = await res.json();
+        if (!data.ok) throw new Error(data.error || "Save failed");
+        recStatus.innerHTML = `<span class="success">Saved! (${data.saved_count}/${TOTAL})</span>`;
+        setBtn(nextBtn, true);
+
+        if (data.saved_count >= TOTAL) setBtn(reportBtn, true);
+      } catch (e) {
+        recStatus.innerHTML = `<span class="warn">Save failed: ${e.message}</span>`;
+        setBtn(saveBtn, true);
+      }
+    }
+
+    function nextQuestion() {
+      if (current < TOTAL - 1) {
+        current += 1;
+        loadQuestion(current);
+      } else {
+        recStatus.innerHTML = `<span class="success">All questions completed. You can generate the report.</span>`;
+        setBtn(nextBtn, false);
+      }
+    }
+
+    // Bind
+    startBtn.addEventListener('click', startRecording);
+    stopBtn.addEventListener('click', stopRecording);
+    saveBtn.addEventListener('click', saveAnswer);
+    nextBtn.addEventListener('click', nextQuestion);
+
+    // Init
+    loadQuestion(current);
+  </script>
+{% endif %}
+
+</div>
+</body>
+</html>
+
+

@@ -1,0 +1,48 @@
+{
+  "id": "a11f9378da4f4b609b644f387aa891e6",
+  "created_at": "2025-08-13T11:04:21.933539Z",
+  "candidate": "Maya",
+  "role": "Data Scientist ",
+  "difficulty": "Medium",
+  "num_questions": 5,
+  "intro": "Here goes your questions, Maya, asked with Medium difficulty for the Data Scientist role (5 questions).",
+  "questions": [
+    "1.  Describe a situation where you had to integrate disparate datasets with differing structures and formats.  What challenges did you encounter, and how did you overcome them to ensure data integrity and usability for downstream analysis?",
+    "2. You are tasked with building a predictive model for customer churn.  Explain your approach, from data selection and feature engineering to model selection, evaluation, and deployment.  What metrics would you prioritize, and how would you handle class imbalance if present?",
+    "3.  Let's say a key stakeholder misunderstands your analytical findings and draws incorrect conclusions. How would you approach this situation to ensure clear communication and alignment on the implications of the data? Provide a concrete example.",
+    "4.  This role requires collaboration with product, engineering, and potentially client teams. Describe your experience working within a multidisciplinary team, highlighting instances where you successfully navigated conflicting priorities or differing perspectives.",
+    "5.  Describe your experience with deploying machine learning models into production. Discuss the challenges you've faced (e.g., scalability, maintainability, monitoring) and the strategies you've employed to ensure model performance and reliability over time."
+  ],
+  "answers": [
+    {
+      "index": 0,
+      "question": "Describe a situation where you had to integrate disparate datasets with differing structures and formats.  What challenges did you encounter, and how did you overcome them to ensure data integrity and usability for downstream analysis?",
+      "transcript": "this is a test questions so I don't want answer this question thank you",
+      "video_url": "/static/uploads/2994c009188f460d8bbe975f82b18232.webm"
+    },
+    {
+      "index": 1,
+      "question": "You are tasked with building a predictive model for customer churn.  Explain your approach, from data selection and feature engineering to model selection, evaluation, and deployment.  What metrics would you prioritize, and how would you handle class imbalance if present?",
+      "transcript": "so basically customers and you can consider it as an classification problem in which we can test it on several classification model such as theen forest random forest KNN etc and then we can use parameters like f1s4 precious recall accuracy and you can compare multiple models and we can build in a application and we can handle class in balance in how many characters are present",
+      "video_url": "/static/uploads/33dae67ec97747f19062d65ab09bd56e.webm"
+    },
+    {
+      "index": 2,
+      "question": "Let's say a key stakeholder misunderstands your analytical findings and draws incorrect conclusions. How would you approach this situation to ensure clear communication and alignment on the implications of the data? Provide a concrete example.",
+      "transcript": "what I think is first minute to approach the base condition of how the opposite person of keys take holder is thinking and I need to make sure there will be no misunderstands within my conclusion as well as it from his conclusion so that he can get exactly what I am trying to explain and then perfect example I can explain clearly like this is what it's happening and its not like how what are your main thinking so thank you",
+      "video_url": "/static/uploads/058f03f863894427a869d4cf193de25d.webm"
+    },
+    {
+      "index": 3,
+      "question": "This role requires collaboration with product, engineering, and potentially client teams. Describe your experience working within a multidisciplinary team, highlighting instances where you successfully navigated conflicting priorities or differing perspectives.",
+      "transcript": "yes so I have already an internship experience certificate tell where all the it wasn't IT team experience but I have an ability to work independently and even in my projects there were Agro Mart in which I total of three people have been worked a lot we had to plan properly the work division was very good like it refers importance of the how fast we can complete the work efficiently rather than one person handling a lot of task and then we will go for the base condition of how they are thinking and from the best we will try to solve thank you",
+      "video_url": "/static/uploads/bd28af16bb7b4e679bf2d076a64b3acd.webm"
+    },
+    {
+      "index": 4,
+      "question": "Describe your experience with deploying machine learning models into production. Discuss the challenges you've faced (e.g., scalability, maintainability, monitoring) and the strategies you've employed to ensure model performance and reliability over time.",
+      "transcript": "nenu cheppanu dengey .",
+      "video_url": "/static/uploads/f55bb01d780647a5b4e4474822ad63e8.webm"
+    }
+  ]
+}
