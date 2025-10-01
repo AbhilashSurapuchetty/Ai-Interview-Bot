@@ -1,8 +1,38 @@
-# Ignore backend .env
-backend/.env  
+# ---- Python ----
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
 
-# Ignore root .env
-.env  
-
-# Ignore virtual environment folders
+# Virtual environment
 venv/
+
+# Environment files
+.env
+backend/.env
+
+# Data / JSON user info (sensitive or local data)
+backend/users.json
+backend/data/
+
+# ---- Node / Frontend ----
+node_modules/
+frontend/node_modules/
+*.log
+
+# ---- OS / Editor junk ----
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# ---- Build / Cache ----
+*.sqlite3
+*.db
+*.log
+*.pot
+*.py[cod]
+*.egg
+*.egg-info/
+dist/
+build/
