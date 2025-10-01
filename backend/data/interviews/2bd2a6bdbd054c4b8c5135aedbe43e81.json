@@ -1,0 +1,17 @@
+{
+  "id": "2bd2a6bdbd054c4b8c5135aedbe43e81",
+  "created_at": "2025-10-01T18:11:14.062604Z",
+  "candidate": "Mayavi",
+  "role": "Machine Learning  Intern",
+  "difficulty": "Medium",
+  "num_questions": 5,
+  "intro": "Here goes your questions, Mayavi, for the Machine Learning Intern role (5 questions, Medium difficulty).",
+  "questions": [
+    "1. Let's say you're building a classification model and notice high variance. Describe three different strategies you could employ to address this, and discuss the potential trade-offs of each approach.",
+    "2. Explain the concept of \"vanishing gradients\" in the context of deep neural networks. What causes them, and what are some techniques you can use to mitigate them?",
+    "3. Imagine you have a dataset with both numerical and categorical features. Describe how you would preprocess and prepare this data for use in a machine learning model. Explain your choice of encoding methods for the categorical variables.",
+    "4. You're tasked with evaluating the performance of a model that predicts whether a customer will churn. Explain which evaluation metrics are most relevant in this scenario, and why. Consider the potential costs associated with false positives and false negatives.",
+    "5. Describe a time when you encountered a significant challenge during a machine learning project. What was the challenge, what steps did you take to address it, and what was the outcome?"
+  ],
+  "answers": []
+}

@@ -1,94 +1,19 @@
-'''from flask import Blueprint, render_template, request, session, redirect, url_for, flash , jsonify
-import google.generativeai as genai
-import os
-from uuid import uuid4
-import json 
-from datetime import datetime 
+# backend/routes/interview.py
 
-interview_bp = Blueprint("interview", __name__)
-
-# Configure Gemini
-GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
-genai.configure(api_key=GEMINI_API_KEY)
-
-@interview_bp.route("/interview", methods=["GET", "POST"])
-def interview():
-    if "user" not in session:
-        flash("Please login first", "danger")
-        return redirect(url_for("auth.login"))
-
-    name = session["user"]["name"]
-
-    if request.method == "POST":
-        role = request.form.get("role")
-        description = request.form.get("description")
-        difficulty = request.form.get("difficulty")
-        num_questions = request.form.get("num_questions")
-
-        if not role or not description or not difficulty or not num_questions:
-            flash("Please fill in all fields", "danger")
-            return redirect(url_for("interview.interview"))
-
-        # Build the prompt
-        prompt = f"""
-You are an expert interviewer.
-The candidate's name is {name}.
-Generate exactly {num_questions} professional interview questions for the job role "{role}".
-Job Description: {description}
-Difficulty Level: {difficulty}
-
-Your output must have:
-1. A single intro line: "Here goes your questions, {name}, asked with {difficulty} difficulty for the {role} role ({num_questions} questions)."
-2. Then a section title: "Interview Questions:"
-3. Then list each question in numbered format:
-1. <Question 1>
-2. <Question 2>
-...
-{num_questions}. <Question {num_questions}>
-
-Do not include anything else.
-"""
-
-        try:
-            model = genai.GenerativeModel("gemini-1.5-flash")
-            response = model.generate_content(prompt)
-
-            lines = [line.strip() for line in response.text.strip().split("\n") if line.strip()]
-
-            intro = lines[0] if lines else ""
-            # Remove intro and "Interview Questions:" line
-            questions = [
-                q for q in lines[1:] if not q.lower().startswith("interview questions")
-            ]
-
-            return render_template(
-                "interview.html",
-                name=name,
-                role=role,
-                difficulty=difficulty,
-                num_questions=num_questions,
-                intro=intro,
-                questions=questions,
-                done=True
-            )
-        except Exception as e:
-            flash(f"AI service error: {e}", "danger")
-            return redirect(url_for("interview.interview"))
-
-    return render_template("interview.html", name=name, done=False)'''
-    
-    
-    # backend/routes/interview.py
 from flask import Blueprint, render_template, request, session, redirect, url_for, flash, jsonify
 import google.generativeai as genai
 from uuid import uuid4
 import json
 import os
+import re
 from datetime import datetime
+from dotenv import load_dotenv
+
+# Load .env file for API key
+load_dotenv()
+GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
 
 interview_bp = Blueprint("interview", __name__)
-
-# ---------- Paths ----------
 BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
 UPLOAD_DIR = os.path.join(BASE_DIR, "frontend", "static", "uploads")
 DATA_DIR = os.path.join(BASE_DIR, "backend", "data", "interviews")
@@ -96,8 +21,6 @@ DATA_DIR = os.path.join(BASE_DIR, "backend", "data", "interviews")
 os.makedirs(UPLOAD_DIR, exist_ok=True)
 os.makedirs(DATA_DIR, exist_ok=True)
 
-# ---------- Gemini ----------
-GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
 if GEMINI_API_KEY:
     genai.configure(api_key=GEMINI_API_KEY)
 
@@ -126,46 +49,67 @@ def interview():
         difficulty = request.form.get("difficulty")
         num_questions = request.form.get("num_questions")
 
+        # Validate form
         if not role or not description or not difficulty or not num_questions:
             flash("Please fill in all fields", "danger")
-            return redirect(url_for("interview.interview"))
+            return render_template(
+                "interview.html",
+                name=name,
+                role=role,
+                description=description,
+                difficulty=difficulty,
+                num_questions=num_questions,
+                done=False
+            )
 
-        # ---- Build the prompt for questions ----
         prompt = f"""
 You are an expert interviewer.
-The candidate's name is {name}.
-Generate exactly {num_questions} professional interview questions for the job role "{role}".
+Generate exactly {num_questions} unique and challenging interview questions for the role: {role}.
+Candidate name: {name}
 Job Description: {description}
-Difficulty Level: {difficulty}
+Difficulty: {difficulty}
 
-Your output must have:
-1. A single intro line: "Here goes your questions, {name}, asked with {difficulty} difficulty for the {role} role ({num_questions} questions)."
-2. Then a section title: "Interview Questions:"
-3. Then list each question in numbered format:
+STRICT FORMAT:
+- First line: "Here goes your questions, {name}, for the {role} role ({num_questions} questions, {difficulty} difficulty)."
+- Then, list each question on a new line, numbered ("1. ...", "2. ...", ...).
+- No extra commentary, no answers, no explanations, only questions.
+- Maximum clarity, one question per line.
+
+Example output:
+Here goes your questions, {name}, for the {role} role ({num_questions} questions, {difficulty} difficulty).
 1. <Question 1>
 2. <Question 2>
 ...
-{num_questions}. <Question {num_questions}>
-
-Do not include anything else.
 """
 
         try:
-            if not GEMINI_API_KEY:
-                # Fallback mock questions
-                lines = [
-                    f"Here goes your questions, {name}, asked with {difficulty} difficulty for the {role} role ({num_questions} questions).",
-                    "Interview Questions:"
-                ] + [f"{i+1}. Sample {role} question #{i+1}" for i in range(int(num_questions))]
-            else:
-                model = genai.GenerativeModel("gemini-1.5-flash")
+            # Call Gemini API
+            lines = []
+            if GEMINI_API_KEY:
+                model = genai.GenerativeModel("gemini-2.0-flash")
                 response = model.generate_content(prompt)
-                lines = [line.strip() for line in response.text.strip().split("\n") if line.strip()]
+                raw_text = response.text.strip() if response.text else ""
+                print("DEBUG: Gemini response:", repr(raw_text))
+                if raw_text:
+                    lines = [line.strip() for line in raw_text.split("\n") if line.strip()]
+            else:
+                print("DEBUG: No API key found, using mock questions")
+                lines = [
+                    f"Here goes your questions, {name}, for the {role} role ({num_questions} questions, {difficulty} difficulty)."
+                ] + [f"{i+1}. Sample {role} question #{i+1}" for i in range(int(num_questions))]
 
-            intro = lines[0] if lines else ""
-            questions = [q for q in lines[1:] if not q.lower().startswith("interview questions")]
+            # Validate and clean output
+            if not lines or len(lines) < int(num_questions) + 1:
+                print("DEBUG: Gemini output incomplete, falling back to mock questions")
+                lines = [
+                    f"Here goes your questions, {name}, for the {role} role ({num_questions} questions, {difficulty} difficulty)."
+                ] + [f"{i+1}. Sample {role} question #{i+1}" for i in range(int(num_questions))]
 
-            # ---- Persist an interview state on disk ----
+            intro = lines[0]
+            # Only keep lines starting with a number and dot (e.g., "1. ...")
+            questions = [line for line in lines[1:] if re.match(r'^\d+\.\s*', line)]
+            print("DEBUG: Final questions parsed for frontend:", questions)
+
             interview_id = uuid4().hex
             state = {
                 "id": interview_id,
@@ -176,11 +120,9 @@ Do not include anything else.
                 "num_questions": int(num_questions),
                 "intro": intro,
                 "questions": questions,
-                "answers": []  # each: {index, question, transcript, video_url}
+                "answers": []
             }
             _save_state(interview_id, state)
-
-            # session pointer only (tiny)
             session["interview_id"] = interview_id
 
             return render_template(
@@ -194,12 +136,23 @@ Do not include anything else.
                 questions=questions,
                 done=True
             )
+
         except Exception as e:
+            print("ERROR: Gemini API or parsing failed:", e)
             flash(f"AI service error: {e}", "danger")
-            return redirect(url_for("interview.interview"))
+            return render_template(
+                "interview.html",
+                name=name,
+                role=role,
+                description=description,
+                difficulty=difficulty,
+                num_questions=num_questions,
+                done=False
+            )
 
     # GET -> show setup form
     return render_template("interview.html", name=name, done=False)
+
 
 @interview_bp.route("/interview/save_answer", methods=["POST"])
 def save_answer():
@@ -240,6 +193,9 @@ def save_answer():
     _save_state(interview_id, state)
 
     return jsonify({"ok": True, "video_url": video_url, "saved_count": len(state["answers"])})
+
+
+
 
 @interview_bp.route("/interview/report", methods=["GET"])
 def interview_report():
@@ -294,7 +250,7 @@ Return STRICT JSON with this exact structure (no extra text):
     raw_text = None
     try:
         if GEMINI_API_KEY:
-            model = genai.GenerativeModel("gemini-1.5-flash")
+            model = genai.GenerativeModel("gemini-2.0-flash")
             resp = model.generate_content(eval_prompt)
             raw_text = (resp.text or "").strip()
         else:

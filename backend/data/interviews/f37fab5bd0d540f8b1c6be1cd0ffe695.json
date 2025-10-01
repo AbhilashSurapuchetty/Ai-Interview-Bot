@@ -1,0 +1,34 @@
+{
+  "id": "f37fab5bd0d540f8b1c6be1cd0ffe695",
+  "created_at": "2025-10-01T18:13:27.863697Z",
+  "candidate": "Mayavi",
+  "role": "Machine Learning  Intern",
+  "difficulty": "Hard",
+  "num_questions": 3,
+  "intro": "Here goes your questions, Mayavi, for the Machine Learning Intern role (3 questions, Hard difficulty).",
+  "questions": [
+    "1. Let's say you're building a fraud detection system. You achieve 99.9% accuracy. Why might this still be a terrible model in a real-world scenario, and what specific strategies could you employ to address these shortcomings beyond simply collecting more data?",
+    "2. Imagine you are tasked with deploying a pre-trained language model for sentiment analysis on a resource-constrained edge device (e.g., a smartphone). Describe your approach to optimizing the model for inference speed and memory footprint without significantly sacrificing accuracy. Discuss specific techniques and trade-offs involved.",
+    "3. Describe a situation where you might choose a non-deep learning algorithm over a deep learning approach, even if you had the computational resources available for deep learning. Explain your reasoning and the specific properties of the problem that would influence your decision."
+  ],
+  "answers": [
+    {
+      "index": 0,
+      "question": "Let's say you're building a fraud detection system. You achieve 99.9% accuracy. Why might this still be a terrible model in a real-world scenario, and what specific strategies could you employ to address these shortcomings beyond simply collecting more data?",
+      "transcript": "yes so on English pro detection system if I achieve 99.9% accuracy the main old so basically why we consider this as a terrible model because it follows war fitting basically the model gets over trend on the train data and it tries to overy on training data and perform's poorly on the new data for a new test setup data in real time voltage sour to reduce your fitting I will try to use regularisation technicalness to the data such that the model does not over depend on the original trial data present and I will try to achieve the short comes by",
+      "video_url": "/static/uploads/88d3106b28e0428f9c8348bbd851c63c.webm"
+    },
+    {
+      "index": 1,
+      "question": "Imagine you are tasked with deploying a pre-trained language model for sentiment analysis on a resource-constrained edge device (e.g., a smartphone). Describe your approach to optimizing the model for inference speed and memory footprint without significantly sacrificing accuracy. Discuss specific techniques and trade-offs involved.",
+      "transcript": "so I am two deploy a preter and language model first sentment analysis basically sentment right to check for NLP on a smartphone device to optimise model for Speed and memory footprint without significantly sacrifice address I will definitely try to use catching techniques such as using reduce such that the dependency on data will be much faster like it takes less amount of time and increase it the speed and even for memory footprints we try to score data will balance both accuracy as well as the model such as inference statement",
+      "video_url": "/static/uploads/d88b4d2eee6a45e18e448e6bad846ec1.webm"
+    },
+    {
+      "index": 2,
+      "question": "Describe a situation where you might choose a non-deep learning algorithm over a deep learning approach, even if you had the computational resources available for deep learning. Explain your reasoning and the specific properties of the problem that would influence your decision.",
+      "transcript": "I'm a we will try to choose a non deep learning algorithm over a deep learning approach even if we have computational resources available for deep learning especially when there are no not much hidden properties or hidden details present in a data set if you take a basic datasheet where the price of a plot will be natural depending up on the area of which it office and how the building has been constructed they don't be much hidden properties that we need to unless by building multiple layer it can be done regression and also linear regression multiple linear so yeah",
+      "video_url": "/static/uploads/abff2e38af734f5cb03be7d7b0c61250.webm"
+    }
+  ]
+}
