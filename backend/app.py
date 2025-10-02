@@ -17,7 +17,6 @@ app.secret_key = os.urandom(24)
 # Register blueprints
 from routes.auth import auth_bp
 from routes.main import main_bp
-from routes.ai import ai_bp
 from routes.interview import interview_bp
 
 app.register_blueprint(interview_bp)
@@ -25,7 +24,7 @@ app.register_blueprint(interview_bp)
 
 app.register_blueprint(auth_bp)
 app.register_blueprint(main_bp)
-app.register_blueprint(ai_bp)
+
 
 if __name__ == "__main__":
     app.run(debug=True)
